@@ -1,10 +1,13 @@
 {
-  "name": "@data-objects/react",
+  "name": "@g2i/data-objects-react",
   "version": "1.0.0-alpha.0",
   "description": "React HOCs for connecting to DAL",
   "main": "dist/index.js",
   "repository": "https://github.com/g2i/data-objects/tree/master/packages/do-react",
   "private": true,
+  "publishConfig": {
+    "access": "private"
+  },
   "scripts": {
     "build": " babel src --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
     "test": "jest",
@@ -27,7 +30,7 @@
     "react": "^16.7.0"
   },
   "dependencies": {
-    "@data-objects/core": "^1.0.0-alpha.0",
+    "@g2i/data-objects": "^1.0.0-alpha.0",
     "lodash.merge": "^4.6.1"
   },
   "jest": {

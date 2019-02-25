@@ -1,9 +1,12 @@
 {
-  "name": "@data-objects/core",
+  "name": "@g2i/data-objects",
   "version": "1.0.0-alpha.0",
   "description": "",
   "repository": "https://github.com/g2i/data-objects/tree/master/packages/do-core",
   "private": true,
+  "publishConfig": {
+    "access": "private"
+  },
   "main": "dist/index.js",
   "scripts": {
     "build": " babel src --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
