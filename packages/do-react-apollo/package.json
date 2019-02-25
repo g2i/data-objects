@@ -1,6 +1,6 @@
 {
   "name": "@data-objects/react-apollo",
-  "version": "0.0.1",
+  "version": "1.0.0-alpha.0",
   "description": "React Apollo bindings for DAL",
   "main": "dist/index.js",
   "repository": "https://github.com/g2i/data-objects/tree/master/packages/do-react-apollo",
@@ -26,8 +26,8 @@
     "react": "^16.7.0"
   },
   "dependencies": {
-    "@data-objects/core": "^1.0.0",
-    "@data-objects/react": "^0.0.2",
+    "@data-objects/core": "^1.0.0-alpha.0",
+    "@data-objects/react": "^1.0.0-alpha.0",
     "apollo-boost": "^0.1.27",
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",

@@ -1,6 +1,6 @@
 {
   "name": "@data-objects/react",
-  "version": "0.0.2",
+  "version": "1.0.0-alpha.0",
   "description": "React HOCs for connecting to DAL",
   "main": "dist/index.js",
   "repository": "https://github.com/g2i/data-objects/tree/master/packages/do-react",
@@ -27,7 +27,7 @@
     "react": "^16.7.0"
   },
   "dependencies": {
-    "@data-objects/core": "^1.0.0",
+    "@data-objects/core": "^1.0.0-alpha.0",
     "lodash.merge": "^4.6.1"
   },
   "jest": {
