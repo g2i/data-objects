@@ -1,5 +1,5 @@
 import React from "react";
-import { Provider as ReactProvider } from "@data-objects/react";
+import { Provider as ReactProvider } from "@g2i/data-objects-react";
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
 import { ApolloClient } from "apollo-client";
