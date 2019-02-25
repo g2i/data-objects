@@ -1,6 +1,6 @@
 import React from "react";
 import ReactProvider from ".";
-import Context from "../context";
+import Context from "../react-context";
 import renderer from "react-test-renderer";
 
 describe("Provider", () => {
