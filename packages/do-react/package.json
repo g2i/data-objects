@@ -2,16 +2,19 @@
   "name": "@data-objects/react",
   "version": "0.0.2",
   "description": "React HOCs for connecting to DAL",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "repository": "https://github.com/g2i/data-objects/tree/master/packages/do-react",
   "private": true,
   "scripts": {
+    "build": " babel src --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
     "test": "jest",
     "test-watch": "jest --watch"
   },
   "author": "g2i",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.2.2",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.0.0",

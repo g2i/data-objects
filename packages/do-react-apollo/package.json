@@ -2,14 +2,19 @@
   "name": "@data-objects/react-apollo",
   "version": "0.0.1",
   "description": "React Apollo bindings for DAL",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "repository": "https://github.com/g2i/data-objects/tree/master/packages/do-react-apollo",
+  "private": true,
   "scripts": {
+    "build": " babel src --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
     "test": "jest",
     "test-watch": "jest --watch"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "babel-jest": "^24.1.0",
