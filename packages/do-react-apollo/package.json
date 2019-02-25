@@ -1,0 +1,43 @@
+{
+  "name": "@data-objects/react-apollo",
+  "version": "0.0.1",
+  "description": "React Apollo bindings for DAL",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "test-watch": "jest --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^24.1.0",
+    "jest": "^24.0.0",
+    "react": "^16.7.0",
+    "react-test-renderer": "^16.7.0"
+  },
+  "peerDependencies": {
+    "react": "^16.7.0"
+  },
+  "dependencies": {
+    "@data-objects/core": "^1.0.0",
+    "@data-objects/react": "^0.0.2",
+    "apollo-boost": "^0.1.27",
+    "graphql": "^14.1.1",
+    "graphql-tag": "^2.10.1",
+    "react-apollo": "^2.4.1"
+  },
+  "jest": {
+    "modulePaths": [
+      "<rootDir>/src/"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!dal-react)"
+    ],
+    "moduleDirectories": [
+      "./src",
+      "node_modules"
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "data-objects",
+  "private": true,
+  "version": "1.0.0",
+  "description": "convert js object to graphql queries and mutations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.1.0",
+    "lerna": "^3.13.0"
+  }
+}
