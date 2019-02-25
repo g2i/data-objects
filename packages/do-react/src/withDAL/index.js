@@ -1,5 +1,5 @@
 import React from "react";
-import Context from "context";
+import Context from "../context";
 import merge from "lodash/merge";
 
 export default function withDAL(WrappedComponent) {
