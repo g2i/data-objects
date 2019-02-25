@@ -1,7 +1,7 @@
 import React from "react";
 import withDAL from ".";
 import renderer from "react-test-renderer";
-import ReactProvider from "../provider";
+import ReactProvider from "../react-provider";
 import schema from "./schema.json";
 
 describe("withDAL", () => {
