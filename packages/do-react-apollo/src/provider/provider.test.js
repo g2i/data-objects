@@ -7,7 +7,7 @@ import { HttpLink } from "apollo-link-http";
 import { getIntrospectionQuery } from "graphql";
 import gql from "graphql-tag";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { Provider as ReactProvider, withDAL } from "@g2i/data-objects-react";
+import { ReactProvider, withDAL } from "@g2i/data-objects-react";
 jest.unmock("dal-react");
 
 describe("Provider", () => {

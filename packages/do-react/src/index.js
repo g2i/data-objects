@@ -1,4 +1,4 @@
-import Provider from "./provider";
+import ReactProvider from "./provider";
 import withDAL from "./withDAL";
 
-export { Provider, withDAL };
+export { ReactProvider, withDAL };
