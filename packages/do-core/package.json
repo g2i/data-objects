@@ -3,7 +3,6 @@
   "version": "1.0.1-alpha.0",
   "description": "",
   "repository": "https://github.com/g2i/data-objects/tree/master/packages/do-core",
-  "private": true,
   "publishConfig": {
     "access": "private"
   },
