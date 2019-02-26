@@ -1,6 +1,6 @@
 {
   "name": "@g2i/data-objects-react",
-  "version": "1.0.10-alpha.0",
+  "version": "1.0.11-alpha.0",
   "description": "React HOCs for connecting to DAL",
   "main": "dist/index.js",
   "repository": "https://github.com/g2i/data-objects/tree/master/packages/do-react",
