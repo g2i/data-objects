@@ -1,5 +1,5 @@
-import { isLastIndex, commaSeparate } from "../utils/array";
-import { mapKeys } from "../utils/object";
+import { isLastIndex, commaSeparate } from "../../utils/array";
+import { mapKeys } from "../../utils/object";
 const isVariable = str => str === "_variables";
 const STRING = "string";
 const NUMBER = "number";

@@ -8,8 +8,8 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "build": " babel src --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
-    "test": "jest",
+    "build": "babel src --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
+    "test": "npm run build && jest",
     "test-watch": "jest --watch"
   },
   "author": "g2i",

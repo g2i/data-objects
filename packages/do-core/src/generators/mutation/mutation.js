@@ -1,5 +1,5 @@
-import { commaSeparate } from "../utils/array";
-import { mapKeys } from "../utils/object";
+import { commaSeparate } from "../../utils/array";
+import { mapKeys } from "../../utils/object";
 
 const extractVariables = (mutationVariables = {}) =>
   mapKeys(mutationVariables, v => `$${v}: ${mutationVariables[v].type}`);
