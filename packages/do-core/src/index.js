@@ -1,5 +1,5 @@
-import GraphQLService from "services/graphql/graphql";
-import { generateQuery, generateMutation } from "generators";
+import GraphQLService from "./services/graphql/graphql";
+import { generateQuery, generateMutation } from "./generators";
 export default class DAL {
   constructor(schema) {
     this.graphQLService = new GraphQLService(schema);
