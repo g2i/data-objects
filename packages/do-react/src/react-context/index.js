@@ -1,5 +1,5 @@
 import React from "react";
 
-const Context = React.createContext({ dal: {}, graphql: () => {} });
+const Context = React.createContext({ $do: {}, graphql: () => {} });
 
 export default Context;

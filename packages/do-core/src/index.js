@@ -1,12 +1,12 @@
 import GraphQLService from "./services/graphql/graphql";
 import { generateQuery, generateMutation } from "./generators";
-export default class DAL {
+export default class DO {
   constructor(schema) {
     this.graphQLService = new GraphQLService(schema);
   }
 
-  generateQuery(dalModel) {
-    return generateQuery(dalModel);
+  generateQuery(doModel) {
+    return generateQuery(doModel);
   }
 
   generateMutation(mutationName, params, returnFields = { id: "" }) {

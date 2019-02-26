@@ -7,8 +7,8 @@ import { HttpLink } from "apollo-link-http";
 import { getIntrospectionQuery } from "graphql";
 import gql from "graphql-tag";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { ReactProvider, withDAL } from "@g2i/data-objects-react";
-jest.unmock("dal-react");
+import { ReactProvider, withDO } from "@g2i/data-objects-react";
+jest.unmock("do-react");
 
 describe("Provider", () => {
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe("Provider", () => {
     global.fetch = jest.fn();
   });
 
-  it("returns a dal-react provider", () => {
+  it("returns a do-react provider", () => {
     const provider = renderer.create(<ReactApolloProvider />);
     expect(!!provider.root.find(el => el.type === ReactProvider)).toBe(true);
   });
@@ -79,17 +79,17 @@ describe("Provider", () => {
       expect(ApolloClient.mock.calls[0][0].cache.addTypename).toBe(false);
     });
   });
-  describe("queries withDAL", () => {
+  describe("queries withDO", () => {
     it("returns the data back to the component", () => {
-      const Component = ({ dal }) => <h1>{dal.user.name}</h1>;
+      const Component = ({ $do }) => <h1>{$do.user.name}</h1>;
       Component.defaultProps = {
-        dal: {
+        $do: {
           user: {
             name: "placeholder"
           }
         }
       };
-      const Container = withDAL(Component);
+      const Container = withDO(Component);
       const state = renderer.create(
         <ReactApolloProvider graphqlURL="https://test.com/graphql">
           <Container />
@@ -103,22 +103,22 @@ describe("Provider", () => {
         });
     });
   });
-  describe("mutations withDAL", () => {
+  describe("mutations withDO", () => {
     it("passes a properly formatted AST to graphql", () => {
-      const Component = ({ dal }) => (
-        <h1 onClick={() => dal.mutate("upvotePost", { postId: "1" })}>
-          {dal.user.name}
+      const Component = ({ $do }) => (
+        <h1 onClick={() => $do.mutate("upvotePost", { postId: "1" })}>
+          {$do.user.name}
         </h1>
       );
       Component.defaultProps = {
-        dal: {
+        $do: {
           user: {
             name: "placeholder..."
           },
           mutate: () => {}
         }
       };
-      const Container = withDAL(Component);
+      const Container = withDO(Component);
       const state = renderer.create(
         <ReactApolloProvider graphqlURL="https://test.com/graphql">
           <Container />
@@ -132,20 +132,20 @@ describe("Provider", () => {
       );
     });
     it("passes arguments to graphql", () => {
-      const Component = ({ dal }) => (
-        <h1 onClick={() => dal.mutate("upvotePost", { postId: "1" })}>
-          {dal.user.name}
+      const Component = ({ $do }) => (
+        <h1 onClick={() => $do.mutate("upvotePost", { postId: "1" })}>
+          {$do.user.name}
         </h1>
       );
       Component.defaultProps = {
-        dal: {
+        $do: {
           user: {
             name: "placeholder..."
           },
           mutate: () => {}
         }
       };
-      const Container = withDAL(Component);
+      const Container = withDO(Component);
       const state = renderer.create(
         <ReactApolloProvider graphqlURL="https://test.com/graphql">
           <Container />
@@ -155,20 +155,20 @@ describe("Provider", () => {
       expect(mockMutate.mock.calls[0][0].variables).toEqual({ postId: "1" });
     });
     it("passes returned data back through", () => {
-      const Component = ({ dal }) => (
-        <h1 onClick={() => dal.mutate("upvotePost", { postId: "1" })}>
-          {dal.post.upvotes}
+      const Component = ({ $do }) => (
+        <h1 onClick={() => $do.mutate("upvotePost", { postId: "1" })}>
+          {$do.post.upvotes}
         </h1>
       );
       Component.defaultProps = {
-        dal: {
+        $do: {
           post: {
             upvotes: 1
           },
           mutate: () => {}
         }
       };
-      const Container = withDAL(Component);
+      const Container = withDO(Component);
       const state = renderer.create(
         <ReactApolloProvider graphqlURL="https://test.com/graphql">
           <Container />

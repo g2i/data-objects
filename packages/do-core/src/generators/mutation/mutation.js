@@ -22,7 +22,7 @@ const constructMutationString = (
 ) =>
   `mutation ${mutationName}(${variablesString}){${mutationName}(${argsString}){${returnFieldsString}}}`;
 
-const convertDALModelToMutation = (
+const convertDOModelToMutation = (
   mutationName = "",
   params = {},
   mutationModel = {}
@@ -46,4 +46,4 @@ const convertDALModelToMutation = (
   };
 };
 
-export default convertDALModelToMutation;
+export default convertDOModelToMutation;

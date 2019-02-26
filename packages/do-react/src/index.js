@@ -1,4 +1,4 @@
 import ReactProvider from "./react-provider";
-import withDAL from "./withDAL";
+import withDO from "./withDO";
 
-export { ReactProvider, withDAL };
+export { ReactProvider, withDO };
