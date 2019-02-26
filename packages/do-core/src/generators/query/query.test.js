@@ -1,24 +1,24 @@
-import convertDALModelToQuery from "./query";
+import convertDOModelToQuery from "./query";
 
-describe("convertDALModelToQuery", () => {
+describe("convertDOModelToQuery", () => {
   it("should return a string", () => {
-    expect(typeof convertDALModelToQuery({})).toEqual("string");
+    expect(typeof convertDOModelToQuery({})).toEqual("string");
   });
   describe("basic query", () => {
     it("should return a query with proper syntax", () => {
       const query = "{users{id username}}";
-      const dalModel = {
+      const doModel = {
         users: {
           id: "",
           username: ""
         }
       };
-      expect(convertDALModelToQuery(dalModel)).toEqual(query);
+      expect(convertDOModelToQuery(doModel)).toEqual(query);
     });
   });
   describe("query with variables", () => {
     it("should return a query with proper syntax", () => {
-      const dalModel = {
+      const doModel = {
         users: {
           _variables: { filter: { id: "1" } },
           id: "",
@@ -26,12 +26,12 @@ describe("convertDALModelToQuery", () => {
         }
       };
       const query = '{users(filter:{"id":"1"}){id username}}';
-      expect(convertDALModelToQuery(dalModel)).toEqual(query);
+      expect(convertDOModelToQuery(doModel)).toEqual(query);
     });
   });
   describe("query with iterable property", () => {
     it("should return a query with proper syntax", () => {
-      const dalModel = {
+      const doModel = {
         users: {
           id: "",
           tweets: [
@@ -42,12 +42,12 @@ describe("convertDALModelToQuery", () => {
         }
       };
       const query = "{users{id tweets{body}}}";
-      expect(convertDALModelToQuery(dalModel)).toEqual(query);
+      expect(convertDOModelToQuery(doModel)).toEqual(query);
     });
   });
   describe("query with deep nesting", () => {
     it("should return a query with proper syntax", () => {
-      const dalModel = {
+      const doModel = {
         users: {
           id: "",
           role: {
@@ -56,30 +56,30 @@ describe("convertDALModelToQuery", () => {
         }
       };
       const query = "{users{id role{name}}}";
-      expect(convertDALModelToQuery(dalModel)).toEqual(query);
+      expect(convertDOModelToQuery(doModel)).toEqual(query);
     });
   });
   describe("query with number property", () => {
     it("should return a query with proper syntax", () => {
-      const dalModel = {
+      const doModel = {
         users: {
           id: 1,
           name: ""
         }
       };
       const query = "{users{id name}}";
-      expect(convertDALModelToQuery(dalModel)).toEqual(query);
+      expect(convertDOModelToQuery(doModel)).toEqual(query);
     });
   });
   describe("query with a boolean property", () => {
     it("should return a query with proper syntax", () => {
-      const dalModel = {
+      const doModel = {
         users: {
           admin: true
         }
       };
       const query = "{users{admin}}";
-      expect(convertDALModelToQuery(dalModel)).toEqual(query);
+      expect(convertDOModelToQuery(doModel)).toEqual(query);
     });
   });
 });

@@ -13,8 +13,8 @@ describe("Provider", () => {
     const tree = provider.toJSON();
     expect(tree.children.length).toBe(1);
   });
-  it("provides dal on context", () => {
-    const dalModel = {
+  it("provides do on context", () => {
+    const doModel = {
       user: {
         _variables: { filter: { id: "1" } },
         username: "user"
@@ -23,7 +23,7 @@ describe("Provider", () => {
     const provider = renderer.create(
       <ReactProvider schema={{ schema: "Schema" }}>
         <Context.Consumer>
-          {({ dal }) => dal.generateQuery(dalModel)}
+          {({ $do }) => $do.generateQuery(doModel)}
         </Context.Consumer>
       </ReactProvider>
     );
@@ -34,7 +34,7 @@ describe("Provider", () => {
     const graphql = jest.fn();
     const provider = renderer.create(
       <ReactProvider schema={{}} graphql={graphql}>
-        <Context.Consumer>{({ dal, graphql }) => graphql()}</Context.Consumer>
+        <Context.Consumer>{({ $do, graphql }) => graphql()}</Context.Consumer>
       </ReactProvider>
     );
     expect(graphql).toHaveBeenCalled();

@@ -2,7 +2,7 @@ import React from "react";
 import Context from "../react-context";
 import merge from "lodash/merge";
 
-export default function withDAL(WrappedComponent) {
+export default function withDO(WrappedComponent) {
   return props => {
     class HOC extends React.Component {
       constructor(props) {
@@ -37,11 +37,11 @@ export default function withDAL(WrappedComponent) {
       componentDidMount() {
         if (
           WrappedComponent.defaultProps &&
-          WrappedComponent.defaultProps.dal
+          WrappedComponent.defaultProps.$do
         ) {
           //Define mutate prop passed to WrappedComponent
           this.mutate = (mutationName, params, returnFields = { id: "" }) => {
-            const mutation = this.context.dal.generateMutation(
+            const mutation = this.context.$do.generateMutation(
               mutationName,
               params,
               returnFields
@@ -72,8 +72,8 @@ export default function withDAL(WrappedComponent) {
             skip,
             executeQuery,
             ...queryFields
-          } = WrappedComponent.defaultProps.dal;
-          //Generate query from dalModel and pass to graphql for fetching
+          } = WrappedComponent.defaultProps.$do;
+          //Generate query from doModel and pass to graphql for fetching
           if (this.props.variables) {
             Object.keys(this.props.variables).reduce((queryFields, key) => {
               if (Array.isArray(queryFields[key])) {
@@ -84,8 +84,8 @@ export default function withDAL(WrappedComponent) {
               return queryFields;
             }, queryFields);
           }
-          const query = this.context.dal.generateQuery(queryFields);
-          if (WrappedComponent.defaultProps.dal.skip) {
+          const query = this.context.$do.generateQuery(queryFields);
+          if (WrappedComponent.defaultProps.$do.skip) {
             this.setState({
               returnedData: {
                 ...this.state.returnedData,
@@ -99,7 +99,7 @@ export default function withDAL(WrappedComponent) {
                       }
                       return queryFields;
                     }, queryFields);
-                    const newQuery = this.context.dal.generateQuery(
+                    const newQuery = this.context.$do.generateQuery(
                       queryFields
                     );
                     this.fetchData(this.context.graphql, newQuery);
@@ -131,16 +131,16 @@ export default function withDAL(WrappedComponent) {
       render() {
         if (
           WrappedComponent.defaultProps &&
-          WrappedComponent.defaultProps.dal
+          WrappedComponent.defaultProps.$do
         ) {
-          const dal = merge(
-            WrappedComponent.defaultProps.dal,
+          const $do = merge(
+            WrappedComponent.defaultProps.$do,
             this.state.returnedData
           );
-          return <WrappedComponent dal={dal} {...this.props} />;
+          return <WrappedComponent $do={$do} {...this.props} />;
         } else {
           console.warn(
-            `dal is not defined in defaultProps for ${this.getDisplayName()}`
+            `$do is not defined in defaultProps for ${this.getDisplayName()}`
           );
           return <WrappedComponent {...this.props} />;
         }

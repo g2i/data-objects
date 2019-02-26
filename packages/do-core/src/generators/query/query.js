@@ -21,17 +21,17 @@ const type = object => {
   }
 };
 
-const convertDalModelToQuery = dalModel =>
-  Object.keys(dalModel).reduce((query, key, i, sourceArray) => {
+const convertDalModelToQuery = doModel =>
+  Object.keys(doModel).reduce((query, key, i, sourceArray) => {
     if (isVariable(key)) {
-      const variables = dalModel[key];
+      const variables = doModel[key];
       const variablesStrings = mapKeys(
         variables,
         key => `${key}:${JSON.stringify(variables[key])}`
       );
       return `(${commaSeparate(variablesStrings)}){`;
     }
-    switch (type(dalModel[key])) {
+    switch (type(doModel[key])) {
       case STRING:
         query += key;
         break;
@@ -45,11 +45,11 @@ const convertDalModelToQuery = dalModel =>
         break;
 
       case ARRAY:
-        query += key + convertDalModelToQuery(dalModel[key][0]);
+        query += key + convertDalModelToQuery(doModel[key][0]);
         break;
 
       default:
-        query += key + convertDalModelToQuery(dalModel[key]);
+        query += key + convertDalModelToQuery(doModel[key]);
     }
     return (query += isLastIndex(i, sourceArray) ? "}" : " ");
   }, "{");

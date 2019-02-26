@@ -1,7 +1,7 @@
 {
   "name": "@g2i/data-objects-react",
   "version": "1.0.12-alpha.0",
-  "description": "React HOCs for connecting to DAL",
+  "description": "React HOCs for connecting to DO",
   "main": "dist/index.js",
   "repository": "https://github.com/g2i/data-objects/tree/master/packages/do-react",
   "publishConfig": {
@@ -36,7 +36,7 @@
       "<rootDir>/src/"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!dal)"
+      "node_modules/(?!do)"
     ],
     "moduleDirectories": [
       "src",
