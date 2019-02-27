@@ -7,6 +7,9 @@
     "access": "private"
   },
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rimraf dist && babel src --out-dir dist --copy-files --ignore __tests__,spec.js,test.js,__snapshots__",
     "test": "npm run build && jest",
