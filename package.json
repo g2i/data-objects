@@ -5,6 +5,7 @@
   "description": "convert js object to graphql queries and mutations",
   "main": "index.js",
   "scripts": {
+    "build": "lerna run build && mkdir -p @g2i && cp -rf packages/do-core/dist ./@g2i/data-objects/ && cp -rf packages/do-react/dist ./@g2i/data-objects-react/ && cp -rf packages/do-react-apollo/dist ./@g2i/data-objects-react-apollo/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -12,6 +13,7 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
+    "copy": "^0.3.2",
     "jest": "^24.1.0",
     "lerna": "^3.13.0",
     "rimraf": "^2.6.3"
