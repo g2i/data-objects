@@ -31,7 +31,7 @@
     "react": "^16.7.0"
   },
   "dependencies": {
-    "@g2i/data-objects": "^1.0.14-alpha.0",
+    "@g2i/data-objects": "^1.0.15-alpha.0",
     "lodash.merge": "^4.6.1"
   },
   "jest": {
