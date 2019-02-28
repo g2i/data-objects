@@ -1,6 +1,6 @@
 {
   "name": "@g2i/data-objects-react-apollo",
-  "version": "1.0.14-alpha.0",
+  "version": "1.0.16-alpha.0",
   "description": "React Apollo bindings for DO",
   "main": "dist/index.js",
   "files": [
@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@g2i/data-objects": "^1.0.14-alpha.0",
-    "@g2i/data-objects-react": "^1.0.14-alpha.0",
+    "@g2i/data-objects-react": "^1.0.16-alpha.0",
     "apollo-boost": "^0.1.27",
     "graphql": "^14.1.1",
     "graphql-tag": "^2.10.1",
