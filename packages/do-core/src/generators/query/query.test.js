@@ -25,7 +25,7 @@ describe("convertDOModelToQuery", () => {
           username: ""
         }
       };
-      const query = '{users(filter:{"id":"1"}){id username}}';
+      const query = '{users(filter:{id:"1"}){id username}}';
       expect(convertDOModelToQuery(doModel)).toEqual(query);
     });
   });

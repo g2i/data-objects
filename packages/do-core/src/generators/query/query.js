@@ -21,13 +21,36 @@ const type = object => {
   }
 };
 
+/**
+ * 
+ * difference between JSON.strigify and stringifyQueryVariable
+ * 
+ * const o = { a: b }
+ * 
+ * JSON.stringify(o) // => { "a": "b" }
+ * stringifyQueryVariable(o) // => { a: "b" }
+ * 
+ * 
+ * const b = { a: b, c: { d: e } }
+ * 
+ * JSON.stringify(b) // => { "a": "b", "c": { "d": "e" } }"
+ * stringifyQueryVariable(b) // => { a: "b", c: { d: "e"}  }"
+ * 
+ * @param {Object} object 
+ */
+const stringifyQueryVariable = object => {
+  if (typeof object === 'object')
+    return `{${Object.keys(object).map(key => `${key}:${stringifyQueryVariable(object[key])}`).join(',')}}`
+  return JSON.stringify(object)
+}
+
 const convertDalModelToQuery = doModel =>
   Object.keys(doModel).reduce((query, key, i, sourceArray) => {
     if (isVariable(key)) {
       const variables = doModel[key];
       const variablesStrings = mapKeys(
         variables,
-        key => `${key}:${JSON.stringify(variables[key])}`
+        key => `${key}:${stringifyQueryVariable(variables[key])}`
       );
       return `(${commaSeparate(variablesStrings)}){`;
     }
