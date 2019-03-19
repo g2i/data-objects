@@ -3,9 +3,6 @@
   "version": "1.0.15-alpha.0",
   "description": "",
   "repository": "https://github.com/g2i/data-objects/tree/master/packages/do-core",
-  "publishConfig": {
-    "access": "private"
-  },
   "main": "dist/index.js",
   "files": [
     "dist"
