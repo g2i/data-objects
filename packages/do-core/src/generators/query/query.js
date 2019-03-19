@@ -22,6 +22,7 @@ const type = object => {
 };
 
 /**
+ * @todo check ES10 implementation of Object.fromEntries https://github.com/tc39/proposal-object-from-entries
  * 
  * difference between JSON.strigify and stringifyQueryVariable
  * 
