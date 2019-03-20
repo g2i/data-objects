@@ -7,8 +7,8 @@ import { HttpLink } from "apollo-link-http";
 import { getIntrospectionQuery } from "graphql";
 import gql from "graphql-tag";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { ReactProvider, withDO } from "@g2i/data-objects-react";
-jest.unmock("do-react");
+import { Provider, withDO } from "@g2i/data-objects-react";
+//jest.unmock("@g2i/data-objects-react");
 
 describe("Provider", () => {
   beforeEach(() => {
