@@ -1,6 +1,6 @@
 {
   "name": "@g2i/data-objects-react",
-  "version": "1.0.18-alpha.0",
+  "version": "1.0.19-alpha.0",
   "description": "React HOCs for connecting to DO",
   "main": "dist/index.js",
   "files": [
@@ -28,7 +28,7 @@
     "react": "^16.7.0"
   },
   "dependencies": {
-    "@g2i/data-objects": "^1.0.18-alpha.0",
+    "@g2i/data-objects": "^1.0.19-alpha.0",
     "lodash.merge": "^4.6.1"
   },
   "jest": {
