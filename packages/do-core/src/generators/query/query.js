@@ -40,8 +40,10 @@ const type = object => {
  * @param {Object} object 
  */
 const stringifyQueryVariable = object => {
-  if (typeof object === 'object')
+  if (!Array.isArray(object) && typeof object === 'object')
     return `{${Object.keys(object).map(key => `${key}:${stringifyQueryVariable(object[key])}`).join(',')}}`
+
+
   return JSON.stringify(object)
 }
 
