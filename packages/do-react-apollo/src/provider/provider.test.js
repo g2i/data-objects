@@ -96,7 +96,7 @@ describe("Provider", () => {
         </ReactApolloProvider>
       );
       return Promise.resolve(state)
-        .then(() => {})
+        .then(() => { })
         .then(() => {
           const tree = state.toJSON();
           expect(tree.children[0]).toBe("user");
@@ -115,7 +115,7 @@ describe("Provider", () => {
           user: {
             name: "placeholder..."
           },
-          mutate: () => {}
+          mutate: () => { }
         }
       };
       const Container = withDO(Component);
@@ -131,7 +131,7 @@ describe("Provider", () => {
         )
       );
     });
-    it("passes arguments to graphql", () => {
+    it.only("passes arguments to graphql", () => {
       const Component = ({ $do }) => (
         <h1 onClick={() => $do.mutate("upvotePost", { postId: "1" })}>
           {$do.user.name}
@@ -142,10 +142,11 @@ describe("Provider", () => {
           user: {
             name: "placeholder..."
           },
-          mutate: () => {}
+          mutate: () => { }
         }
       };
       const Container = withDO(Component);
+      console.log('container', Container);
       const state = renderer.create(
         <ReactApolloProvider graphqlURL="https://test.com/graphql">
           <Container />
@@ -165,7 +166,7 @@ describe("Provider", () => {
           post: {
             upvotes: 1
           },
-          mutate: () => {}
+          mutate: () => { }
         }
       };
       const Container = withDO(Component);
@@ -176,7 +177,7 @@ describe("Provider", () => {
       );
       state.root.find(el => el.type === "h1").props.onClick();
       return Promise.resolve(state)
-        .then(() => {})
+        .then(() => { })
         .then(() => {
           const tree = state.toJSON();
           expect(tree.children[0]).toBe("2");
