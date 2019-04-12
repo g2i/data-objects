@@ -3,7 +3,7 @@ import Context from '../react-context';
 import merge from 'lodash/merge';
 
 const useDO = (defaultProps) => {
-  const [returnedData, setReturnedData] = React.useState({ mutate, errors: [] });
+  const [returnedData, setReturnedData] = React.useState({ errors: [] });
   const context = React.useContext(Context);
 
   const fetchData = async (fetch, query) => {
@@ -21,7 +21,7 @@ const useDO = (defaultProps) => {
 
   React.useEffect(() => {
     mutate();
-    // const { mutate, loading, errors, skip, executeQuery, ...queryFields } = defaultProps.$do;
+    const { mutate, loading, errors, skip, executeQuery, ...queryFields } = defaultProps.$do;
 
     if (defaultProps.variables) {
       Object.keys(defaultProps.variables).reduce((queryFields, key) => {
@@ -87,7 +87,7 @@ const useDO = (defaultProps) => {
   };
 
   if (defaultProps && defaultProps.$do) {
-    return merge($do, returnedData);
+    return { $do: merge(defaultProps.$do, returnedData), mutate };
   } else {
     console.warn('$do is not defined in defaultProps for this component.');
   }
