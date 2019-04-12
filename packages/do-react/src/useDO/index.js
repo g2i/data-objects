@@ -21,7 +21,7 @@ const useDO = (defaultProps) => {
 
   React.useEffect(() => {
     mutate();
-    const { mutate, loading, errors, skip, executeQuery, ...queryFields } = defaultProps.$do;
+    // const { mutate, loading, errors, skip, executeQuery, ...queryFields } = defaultProps.$do;
 
     if (defaultProps.variables) {
       Object.keys(defaultProps.variables).reduce((queryFields, key) => {
