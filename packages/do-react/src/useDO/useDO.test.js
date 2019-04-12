@@ -3,10 +3,10 @@ import useDO from '.';
 import renderer from 'react-test-renderer';
 
 describe('useDO', () => {
-	it('returns an object with values', () => {
+	it('returns text actual value', () => {
 		const TestComponent = () => {    
-      const test = useDO({ $do: { name: 'Hi!' } });
-      return <p>{test.$do.name}</p>;
+      const { $do } = useDO({ $do: { name: 'Hi!' } });
+      return <p>{$do.name}</p>;
     };
     const container = renderer.create(<TestComponent />);
 		const tree = container.toJSON();
