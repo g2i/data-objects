@@ -3,61 +3,57 @@ import Context from '../react-context';
 import merge from 'lodash/merge';
 
 const useDO = defaultProps => {
-	const [returnedData, setReturnedData] = React.useState({
-		mutate,
-		errors: []
-	});
+
+	if (!defaultProps || !defaultProps.$do) {
+		console.warn('$do is not defined in defaultProps for this component.');
+		return {}
+	}
+
 	const context = React.useContext(Context);
-	console.log(context);
-
-	const fetchData = async (fetch, query) => {
-		try {
-			const data = await fetch(query);
-			setReturnedData({ ...returnedData, ...data, loading: false });
-		} catch (error) {
-			setReturnedData({
-				...returnedData,
-				errors: [...returnedData.errors, error],
-				loading: false
-			});
-		}
-	};
-
-	let mutate;
-
-	if (defaultProps && defaultProps.$do) {
-		mutate = async (mutationName, params, returnFields = { id: '' }) => {
+	const fetchGql = context.graphql;
+	
+	const mutate = (mutationName, params, returnFields = { id: '' }) => {
 			const mutation = context.$do.generateMutation(
 				mutationName,
 				params,
 				returnFields
 			);
-			try {
-				const data = await context.graphql(mutation);
-				setReturnedData({ ...returnedData, ...data });
-			} catch (error) {
-				console.warn(error);
+			return fetchGql(mutation)
+				.then(data => {
+					setReturnedData({ ...returnedData, ...data })
+				})
+				.catch(error => {
+					setReturnedData({
+						...returnedData,
+						errors: [...returnedData.errors, error],
+					});
+				})
+		};
+
+	const [returnedData, setReturnedData] = React.useState({
+		mutate,
+		errors: []
+	});
+
+	const fetchData = (query) => {
+		setReturnedData({ ...returnedData, loading: true })
+		return fetchGql(query)
+			.then(data => {
+				setReturnedData({ ...returnedData, ...data, loading: false });
+			})
+			.catch(res => {
 				setReturnedData({
 					...returnedData,
-					errors: [...returnedData.errors],
-					error
+					errors: [...returnedData.errors, res],
+					loading: false
 				});
-			}
-		};
-	}
+			})
+	};
 
-	React.useEffect(() => {
-		const {
-			mutate: defaultMutate,
-			loading,
-			errors,
-			skip,
-			executeQuery,
-			...queryFields
-		} = defaultProps.$do;
+	const mapVariablesToQueryFields = (variables, queryFields) => {
 
-		if (defaultProps.variables) {
-			Object.keys(defaultProps.variables).reduce((queryFields, key) => {
+		const res = Object.keys(variables)
+			.reduce((queryFields, key) => {
 				if (Array.isArray(queryFields[key])) {
 					queryFields[key][0]._variables = variables[key];
 				} else {
@@ -65,8 +61,25 @@ const useDO = defaultProps => {
 				}
 				return queryFields;
 			}, queryFields);
-		}
 
+		return res
+	}
+
+
+	const doFetch = (fetchVariables) => {
+		const {
+			mutate: defaultMutate, // remove it from rest
+			loading,
+			errors,
+			skip,
+			executeQuery,
+			variables, // remove it
+			...queryFields
+		} = defaultProps.$do;
+
+		if (fetchVariables) {
+			mapVariablesToQueryFields(fetchVariables, queryFields)
+		}
 		const query = context.$do.generateQuery(queryFields);
 
 		if (defaultProps.$do.skip) {
@@ -74,18 +87,11 @@ const useDO = defaultProps => {
 				...returnedData,
 				executeQuery: variables => {
 					if (variables) {
-						Object.keys(variables).reduce((queryFields, key) => {
-							if (Array.isArray(queryFields[key])) {
-								queryFields[key][0]._variables = variables[key];
-							} else {
-								queryFields[key]._variables = variables[key];
-							}
-							return queryFields;
-						}, queryFields);
+						mapVariablesToQueryFields(variables, queryFields)
 						const newQuery = context.$do.generateQuery(queryFields);
-						fetchData(context.graphql, newQuery);
+						fetchData(newQuery);
 					} else {
-						fetchData(context.graphql, query);
+						fetchData(query);
 					}
 				}
 			});
@@ -95,15 +101,12 @@ const useDO = defaultProps => {
 				mutate,
 				loading: true
 			});
-			fetchData(context.graphql, query);
+			fetchData(query);
 		}
-	}, [defaultProps.$do, defaultProps.variables]);
-
-	if (defaultProps && defaultProps.$do) {
-		return { $do: merge(defaultProps.$do, returnedData), fetch: fetchData(context.graphql, query) };
-	} else {
-		console.warn('$do is not defined in defaultProps for this component.');
 	}
+
+	return { $do: merge({}, defaultProps.$do, returnedData), fetch: doFetch };
+
 };
 
 export default useDO;

@@ -23,8 +23,11 @@ describe('useDO', () => {
 			}
 		};
 		const Hello = () => {
-			const { $do } = useDO(defaultProps);
-			return <div>{$do.me}</div>;
+			const { $do, fetch } = useDO(defaultProps);
+			React.useEffect(() => {
+				fetch()
+			}, [])
+			return <div>{$do.me.name}</div>;
 		};
 		const query = `{me{name}}`;
 		const graphql = jest.fn(() => Promise.resolve());
