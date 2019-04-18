@@ -9,38 +9,38 @@ beforeAll(() => jest.spyOn(React, 'useEffect').mockImplementation(React.useLayou
 afterAll(() => React.useEffect.mockRestore())
 
 describe('useDO', () => {
-	it('returns text actual value', () => {
-		const TestComponent = () => {
-			const { $do } = useDO( { name: 'Hi!' } );
-			return <p>{$do.name}</p>;
-		};
-		const container = renderer.create(<TestComponent />);
-		const tree = container.toJSON();
-		expect(tree.children[0]).toBe('Hi!');
-	});
-	it('passes the container props', () => {
-		const defaultProps = {
-				me: {
-					name: 'placeholder...'
-				}
-		};
-		const Hello = () => {
+  it('returns text actual value', () => {
+    const TestComponent = () => {
+      const { $do } = useDO( { name: 'Hi!' } );
+      return <p>{$do.name}</p>;
+    };
+    const container = renderer.create(<TestComponent />);
+    const tree = container.toJSON();
+    expect(tree.children[0]).toBe('Hi!');
+  });
+  it('passes the container props', () => {
+    const defaultProps = {
+        me: {
+          name: 'placeholder...'
+        }
+    };
+    const Hello = () => {
 
-				const { fetch } = useDO(defaultProps);
-				React.useEffect(() => {
-					fetch()
-				}, [])
-			return <div>hello</div>;
-		};
-		const query = `{me{name}}`;
-		const graphql = jest.fn(() => Promise.resolve());
-		act(() => {
-			renderer.create(
-				<ReactProvider schema={{}} {...{ graphql }}>
-					<Hello />
-				</ReactProvider>
-			);
-		})
-		expect(graphql).toHaveBeenCalledWith(query);
-	});
+        const { fetch } = useDO(defaultProps);
+        React.useEffect(() => {
+          fetch()
+        }, [])
+      return <div>hello</div>;
+    };
+    const query = `{me{name}}`;
+    const graphql = jest.fn(() => Promise.resolve());
+    act(() => {
+      renderer.create(
+        <ReactProvider schema={{}} {...{ graphql }}>
+          <Hello />
+        </ReactProvider>
+      );
+    })
+    expect(graphql).toHaveBeenCalledWith(query);
+  });
 });
