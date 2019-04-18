@@ -4,8 +4,8 @@ import merge from 'lodash/merge';
 
 const useDO = defaultProps => {
 
-	if (!defaultProps || !defaultProps.$do) {
-		console.warn('$do is not defined in defaultProps for this component.');
+	if (!defaultProps) {
+		console.warn('No default props have been passed to useDO()');
 		return {}
 	}
 
@@ -31,8 +31,8 @@ const useDO = defaultProps => {
 		};
 
 	const [returnedData, setReturnedData] = React.useState({
-		mutate,
-		errors: []
+		errors: [],
+		loading: false,
 	});
 
 	const fetchData = (query) => {
@@ -55,16 +55,21 @@ const useDO = defaultProps => {
 		const res = Object.keys(variables)
 			.reduce((queryFields, key) => {
 				if (Array.isArray(queryFields[key])) {
-					queryFields[key][0]._variables = variables[key];
+					queryFields[key][0] = {
+            _variables: variables[key],
+            ...queryFields[key][0],
+          }
 				} else {
-					queryFields[key]._variables = variables[key];
+					queryFields[key] = {
+            _variables: variables[key],
+            ...queryFields[key],
+          }
 				}
 				return queryFields;
-			}, queryFields);
+			}, {...queryFields});
 
 		return res
 	}
-
 
 	const doFetch = (fetchVariables) => {
 		const {
@@ -75,37 +80,17 @@ const useDO = defaultProps => {
 			executeQuery,
 			variables, // remove it
 			...queryFields
-		} = defaultProps.$do;
+		} = defaultProps;
 
-		if (fetchVariables) {
-			mapVariablesToQueryFields(fetchVariables, queryFields)
-		}
-		const query = context.$do.generateQuery(queryFields);
+		const mappedQueryFields = fetchVariables
+			? mapVariablesToQueryFields(fetchVariables, queryFields) 
+			: queryFields
 
-		if (defaultProps.$do.skip) {
-			setReturnedData({
-				...returnedData,
-				executeQuery: variables => {
-					if (variables) {
-						mapVariablesToQueryFields(variables, queryFields)
-						const newQuery = context.$do.generateQuery(queryFields);
-						fetchData(newQuery);
-					} else {
-						fetchData(query);
-					}
-				}
-			});
-		} else {
-			setReturnedData({
-				...returnedData,
-				mutate,
-				loading: true
-			});
-			fetchData(query);
-		}
+		const query = context.$do.generateQuery(mappedQueryFields);
+		return fetchData(query)
 	}
 
-	return { $do: merge({}, defaultProps.$do, returnedData), fetch: doFetch };
+	return { $do: merge({}, defaultProps, returnedData), fetch: doFetch, mutate };
 
 };
 
