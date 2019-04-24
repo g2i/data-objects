@@ -1,9 +1,9 @@
 import React from 'react';
 import Context from '../react-context';
 import merge from 'lodash/merge';
+import mapVariablesToQueryFields from './mapVariablesToQueryFields'
 
 const useDO = defaultProps => {
-
   if (!defaultProps) {
     console.warn('No default props have been passed to useDO()');
     return {}
@@ -11,65 +11,71 @@ const useDO = defaultProps => {
 
   const context = React.useContext(Context);
   const fetchGql = context.graphql;
-  
-  const mutate = (mutationName, params, returnFields = { id: '' }) => {
-      const mutation = context.$do.generateMutation(
-        mutationName,
-        params,
-        returnFields
-      );
-      return fetchGql(mutation)
-        .then(data => {
-          setReturnedData({ ...returnedData, ...data })
-        })
-        .catch(error => {
-          setReturnedData({
-            ...returnedData,
-            errors: [...returnedData.errors, error],
-          });
-        })
-    };
 
-  const [returnedData, setReturnedData] = React.useState({
+  const [state, setState] = React.useState({
     errors: [],
     loading: false,
   });
+  
+  const mutate = (mutationName, params, returnFields = { id: '' }) => {
+    /**
+     * Set updating state to true
+     */
+    setState({ ...state, updating: true })
+
+    const mutation = context.$do.generateMutation(
+      mutationName,
+      params,
+      returnFields
+    );
+
+    /**
+     * Return promise for better UI handling
+     */
+    return fetchGql(mutation)
+      .then(data => {
+        setState({
+          ...state,
+          ...data,
+          updating: false
+        })
+      })
+      .catch(error => {
+        setState({
+          ...state,
+          updating: false,
+          errors: [...state.errors, error],
+        });
+      })
+    };
+
 
   const fetchData = (query) => {
-    setReturnedData({ ...returnedData, loading: true })
+    /**
+     * Set loading state to true
+     */
+    setState({ ...state, loading: true })
+
+    /**
+     * Return promise for better UI handling
+     */
     return fetchGql(query)
       .then(data => {
-        setReturnedData({ ...returnedData, ...data, loading: false });
+        setState({
+          ...state,
+          ...data,
+          loading: false
+        });
       })
       .catch(res => {
-        setReturnedData({
-          ...returnedData,
-          errors: [...returnedData.errors, res],
+        setState({
+          ...state,
+          errors: [...state.errors, res],
           loading: false
         });
       })
   };
 
-  const mapVariablesToQueryFields = (variables, queryFields) => {
-
-    const res = Object.keys(variables)
-      .reduce((queryFields, key) => {
-        if (Array.isArray(queryFields[key])) {
-          queryFields[key][0] = {
-            _variables: variables[key],
-            ...queryFields[key][0],
-          }
-        } else {
-          queryFields[key] = {
-            _variables: variables[key],
-            ...queryFields[key],
-          }
-        }
-        return queryFields;
-      }, {...queryFields});
-
-    return res
-  }
 
   const doFetch = (fetchVariables) => {
     const {
@@ -90,7 +96,7 @@ const useDO = defaultProps => {
     return fetchData(query)
   }
 
-  return { $do: merge({}, defaultProps, returnedData), fetch: doFetch, mutate };
+  return { $do: merge({}, defaultProps, state), fetch: doFetch, mutate };
 
 };
 
