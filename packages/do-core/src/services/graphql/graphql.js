@@ -6,7 +6,7 @@ export default class GraphQLService {
 		}
 	) {
 		this.schema = schema;
-		this.options = options
+		this.options = options;
 	}
 
 	get schemaTypes() {
@@ -14,7 +14,8 @@ export default class GraphQLService {
 	}
 
 	get mutationFields() {
-		return this.schemaTypes.find(type => type.name === this.options.mutationTypeName).fields;
+		const schemaType = this.schemaTypes.find(type => type.name === this.options.mutationTypeName);
+		return schemaType ? schemaType.fields : [];
 	}
 
 	getMutationModel(mutationName, returnFields = { id: "" }) {

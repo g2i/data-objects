@@ -28,7 +28,7 @@ describe("Provider", () => {
       </ReactProvider>
     );
     const tree = provider.toJSON();
-    expect(tree).toEqual('{user(filter:{"id":"1"}){username}}');
+    expect(tree).toEqual('{user(filter:{id:"1"}){username}}');
   });
   it("provides graphql function on context", () => {
     const graphql = jest.fn();
