@@ -141,7 +141,7 @@ describe("withDO", () => {
       }
     });
     const container = renderer.create(
-      <ReactProvider schema={schema} graphql={graphql}>
+      <ReactProvider schema={schema} graphql={graphql} options={{ gqlService: { mutationTypeName: 'QueryMutation'}}}>
         <Container />
       </ReactProvider>
     );

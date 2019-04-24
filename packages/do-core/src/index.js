@@ -6,8 +6,8 @@
 import GraphQLService from "./services/graphql/graphql";
 import { generateQuery, generateMutation } from "./generators";
 export default class DO {
-  constructor(schema) {
-    this.graphQLService = new GraphQLService(schema);
+  constructor(schema, options = {}) {
+    this.graphQLService = new GraphQLService(schema, options.gqlService);
   }
 
   generateQuery(doModel) {

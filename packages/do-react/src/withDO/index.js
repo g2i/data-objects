@@ -7,12 +7,12 @@ export default function withDO(WrappedComponent) {
     constructor(props) {
       super(props);
       this.state = {
-        returnedData: { mutate: this.mutate, errors: [] }
+        returnedData: { mutate: this.mutate, errors: [], updating: false, loading: false }
       };
     }
 
     fetchData(fetch, query) {
-      fetch(query)
+      return fetch(query)
         .then(data => {
           this.setState({
             returnedData: {
@@ -34,6 +34,7 @@ export default function withDO(WrappedComponent) {
     }
 
     componentDidMount() {
+      const { returnedData } = this.state;
       if (
         WrappedComponent.defaultProps &&
         WrappedComponent.defaultProps.$do
@@ -45,21 +46,31 @@ export default function withDO(WrappedComponent) {
             params,
             returnFields
           );
-          this.context
+
+          this.setState({
+            returnedData: {
+              ...returnedData,
+              updating: true,
+            }
+          })
+
+          return this.context
             .graphql(mutation)
             .then(data => {
               this.setState({
                 returnedData: {
-                  ...this.state.returnedData,
-                  ...data
+                  ...returnedData,
+                  ...data,
+                  updating: false,
                 }
               });
             })
             .catch(err => {
               this.setState({
                 returnedData: {
-                  ...this.state.returnedData,
-                  errors: [...this.state.returnedData.errors, err]
+                  ...returnedData,
+                  errors: [...returnedData.errors, err],
+                  updating: false,
                 }
               });
             });
@@ -69,6 +80,7 @@ export default function withDO(WrappedComponent) {
           loading,
           errors,
           skip,
+          updating,
           executeQuery,
           ...queryFields
         } = WrappedComponent.defaultProps.$do;
