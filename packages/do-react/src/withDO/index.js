@@ -1,6 +1,6 @@
-import React from "react";
-import Context from "../react-context";
-import merge from "lodash/merge";
+import React from 'react';
+import Context from '../react-context';
+import merge from 'lodash/merge';
 
 export default function withDO(WrappedComponent) {
   class HOC extends React.Component {
@@ -34,12 +34,9 @@ export default function withDO(WrappedComponent) {
     }
 
     componentDidMount() {
-      if (
-        WrappedComponent.defaultProps &&
-        WrappedComponent.defaultProps.$do
-      ) {
+      if (WrappedComponent.defaultProps && WrappedComponent.defaultProps.$do) {
         //Define mutate prop passed to WrappedComponent
-        this.mutate = (mutationName, params, returnFields = { id: "" }) => {
+        this.mutate = (mutationName, params, returnFields = { id: '' }) => {
           const mutation = this.context.$do.generateMutation(
             mutationName,
             params,
@@ -98,9 +95,7 @@ export default function withDO(WrappedComponent) {
                     }
                     return queryFields;
                   }, queryFields);
-                  const newQuery = this.context.$do.generateQuery(
-                    queryFields
-                  );
+                  const newQuery = this.context.$do.generateQuery(queryFields);
                   this.fetchData(this.context.graphql, newQuery);
                 } else {
                   this.fetchData(this.context.graphql, query);
@@ -123,15 +118,13 @@ export default function withDO(WrappedComponent) {
 
     getDisplayName() {
       return (
-        WrappedComponent.displayName || WrappedComponent.name || "Component"
+        WrappedComponent.displayName || WrappedComponent.name || 'Component'
       );
     }
 
     render() {
-      if (
-        WrappedComponent.defaultProps &&
-        WrappedComponent.defaultProps.$do
-      ) {
+      console.log(this.context);
+      if (WrappedComponent.defaultProps && WrappedComponent.defaultProps.$do) {
         const $do = merge(
           WrappedComponent.defaultProps.$do,
           this.state.returnedData
