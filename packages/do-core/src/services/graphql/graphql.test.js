@@ -1,11 +1,24 @@
 import GraphQLService from "./graphql";
 import schema from "./introspectionResult.json";
+import schemaCustom from "./introspectionResultCustomMutationTypeName.json";
+
+
+
 
 describe("GraphQLService", () => {
 	describe("construction", () => {
 		it("should set schema property equal to provided schema", () => {
 			const graphQLService = new GraphQLService(schema);
 			expect(graphQLService.schema).toEqual(schema);
+		});
+	});
+	describe("construction with custom options", () => {
+		it("should return an array of mutation fields", () => {
+			const graphQLService = new GraphQLService(schemaCustom, { mutationTypeName: 'QueryMutation'});
+			const expectedValue = schemaCustom.__schema.types.find(
+				type => type.name === "QueryMutation"
+			).fields;
+			expect(graphQLService.mutationFields).toEqual(expectedValue);
 		});
 	});
 	describe("getters", () => {
