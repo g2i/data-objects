@@ -121,7 +121,7 @@ describe("withDO", () => {
         me: {
           name: "placeholder..."
         },
-        mutate: () => {}
+        mutate: () => { }
       }
     };
     const Container = withDO(Hello);
@@ -173,7 +173,7 @@ describe("withDO", () => {
         </ReactProvider>
       );
       return Promise.resolve(container)
-        .then(() => {})
+        .then(() => { })
         .then(() => {
           const tree = container.toJSON();
           expect(tree.children[0]).toBe("1");
@@ -230,7 +230,7 @@ describe("withDO", () => {
         </ReactProvider>
       );
       return Promise.resolve(container)
-        .then(() => {})
+        .then(() => { })
         .then(() => {
           const tree = container.toJSON();
           expect(tree.children[0]).toBe("2");
@@ -285,7 +285,7 @@ describe("withDO", () => {
         </ReactProvider>
       );
       return Promise.resolve(container)
-        .then(() => {})
+        .then(() => { })
         .then(() => {
           const tree = container.toJSON();
           expect(tree.children[0]).toBe("1");
@@ -308,50 +308,6 @@ describe("withDO", () => {
         </ReactProvider>
       );
       expect(graphql).toHaveBeenCalledWith('{users(id:"2"){name}}');
-    });
-    it("refetches the query when the variables prop changes", () => {
-      const Hello = ({ $do, onClick }) => (
-        <h1 onClick={() => onClick("3")}>{$do.users[0].name}</h1>
-      );
-      Hello.defaultProps = {
-        $do: {
-          users: [{ _variables: { id: "1" }, name: "placeholder..." }]
-        }
-      };
-      const Container = withDO(Hello);
-      const graphql = jest.fn(() => Promise.resolve({}));
-      class Stateful extends React.Component {
-        constructor(props) {
-          super(props);
-          this.state = {
-            id: "2"
-          };
-          this.handleClick = this.handleClick.bind(this);
-        }
-
-        handleClick(id) {
-          this.setState({ id });
-        }
-
-        render() {
-          return (
-            <Container
-              onClick={this.handleClick}
-              variables={{ users: { id: this.state.id } }}
-            />
-          );
-        }
-      }
-      const container = renderer.create(
-        <ReactProvider schema={{}} graphql={graphql}>
-          <Stateful />
-        </ReactProvider>
-      );
-      return Promise.resolve(container).then(() => {
-        const h = container.root.find(el => el.type === Stateful);
-        h.instance.handleClick("3");
-        expect(graphql).toHaveBeenLastCalledWith('{users(id:"3"){name}}');
-      });
     });
   });
   describe("delaying the query execution", () => {
@@ -405,7 +361,7 @@ describe("withDO", () => {
               me: {
                 name: "placeholder..."
               },
-              executeQuery: () => {}
+              executeQuery: () => { }
             }
           };
           const Container = withDO(Hello);
@@ -425,7 +381,7 @@ describe("withDO", () => {
               me: {
                 name: "placeholder..."
               },
-              executeQuery: () => {}
+              executeQuery: () => { }
             }
           };
           const Container = withDO(Hello);
@@ -448,7 +404,7 @@ describe("withDO", () => {
                 _variables: { id: "1" },
                 name: "placeholder..."
               },
-              executeQuery: () => {}
+              executeQuery: () => { }
             }
           };
           const Container = withDO(Hello);
