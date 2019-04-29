@@ -139,7 +139,6 @@ export default function withDO(WrappedComponent) {
     }
 
     render() {
-      console.log(this.context);
       if (WrappedComponent.defaultProps && WrappedComponent.defaultProps.$do) {
         const $do = merge(
           WrappedComponent.defaultProps.$do,
