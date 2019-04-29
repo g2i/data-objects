@@ -146,7 +146,6 @@ describe("Provider", () => {
         }
       };
       const Container = withDO(Component);
-      console.log('container', Container);
       const state = renderer.create(
         <ReactApolloProvider graphqlURL="https://test.com/graphql">
           <Container />
